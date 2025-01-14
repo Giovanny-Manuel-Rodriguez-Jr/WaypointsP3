@@ -7,7 +7,7 @@ public class Graph
 
     List<Edge> edges = new List<Edge>();
     List<Node> nodes = new List<Node>();
-    List<Node> pathList = new List<Node>();
+   public List<Node> pathList = new List<Node>();
 
     public Graph()
     {
@@ -70,7 +70,7 @@ public class Graph
             Node thisNode = open[i];
             if(thisNode.getId() == endId)
             {
-                //ReconstructPath(start,end);
+                ReconstructPath(start,end);
                 return true;
             }
 
@@ -107,6 +107,34 @@ public class Graph
             }
         }
         return false;
+    }
+
+    public void ReconstructPast(Node startId, Node endId)
+    {
+        pathList.Clear();
+        pathList.Add(endId);
+
+        var p = endId.cameFrom;
+        while (p != startId && p != null)
+        {
+            pathList.Insert(0, p);
+            p = p.cameFrom;
+        }
+        pathList.Insert(0, startId);
+    }
+
+    public void ReconstructPath(Node startId, Node endId)
+    {
+        pathList.Clear();
+        pathList.Add(endId);
+
+        var p = endId.cameFrom;
+        while (p != startId && p != null)
+        {
+            pathList.Insert(0, p);
+            p = p.cameFrom;
+        }
+        pathList.Insert(0, startId);
     }
 
     float distance(Node a, Node b)
